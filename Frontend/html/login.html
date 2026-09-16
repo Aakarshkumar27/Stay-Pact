@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Register | StayPact</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body style="background: linear-gradient(180deg, #F0FDFA 0%, #F8FAFC 100%); min-height: 100vh; display: flex; flex-direction: column;">
+
+  <!-- Navbar -->
+  <nav class="navbar" id="globalNavbar"></nav>
+
+  <!-- Auth Card Container -->
+  <main class="container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+    
+    <div style="max-width: 480px; width: 100%; background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); padding: 2.5rem;">
+      
+      <!-- Logo & Title -->
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div class="brand-logo" style="justify-content: center; margin-bottom: 0.5rem;">
+          <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
+          <span>Stay<span class="logo-highlight">Pact</span></span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.92rem;">Monthly living agreements on fair mutual terms</p>
+      </div>
+
+      <!-- Auth Tabs (Login vs Register) -->
+      <div style="display: flex; border-bottom: 2px solid var(--border); margin-bottom: 1.8rem;">
+        <button id="tabLogin" class="btn" style="flex: 1; border-radius: 0; border-bottom: 3px solid var(--primary); font-weight: 800; color: var(--primary);" onclick="switchAuthTab('login')">
+          Log In
+        </button>
+        <button id="tabRegister" class="btn" style="flex: 1; border-radius: 0; border-bottom: 3px solid transparent; font-weight: 700; color: var(--text-muted);" onclick="switchAuthTab('register')">
+          Register
+        </button>
+      </div>
+
+      <!-- 1. LOGIN FORM -->
+      <form id="loginForm" onsubmit="handleLogin(event)" style="display: flex; flex-direction: column; gap: 1.2rem;">
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Email Address</label>
+          <input type="email" id="loginEmail" required placeholder="name@example.com" value="tenant@staypact.com" style="width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Password</label>
+          <input type="password" id="loginPassword" required value="password123" style="width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="padding: 0.8rem; font-size: 1rem;">
+          Sign In
+        </button>
+
+        <!-- Pre-filled test hints -->
+        <div style="background: var(--bg-subtle); padding: 0.8rem; border-radius: 6px; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+          <b>Quick Demo Accounts:</b><br>
+          &bull; Tenant Demo: <code>tenant@staypact.com</code> (Pass: <code>123</code>)<br>
+          &bull; Landlord Demo: <code>landlord@staypact.com</code> (Pass: <code>123</code>)
+        </div>
+      </form>
+
+      <!-- 2. REGISTER FORM -->
+      <form id="registerForm" onsubmit="handleRegister(event)" style="display: none; flex-direction: column; gap: 1.2rem;">
+        
+        <!-- Role Selection -->
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">I am joining as:</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem; border: 1.5px solid var(--primary); background: var(--primary-light); border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 700;">
+              <input type="radio" name="regRole" value="tenant" checked onchange="toggleTenantOptions(true)">
+              <span>👤 Tenant / Renter</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 700;">
+              <input type="radio" name="regRole" value="landlord" onchange="toggleTenantOptions(false)">
+              <span>🏠 Landlord / Owner</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Tenant Category (Bachelor vs Family) -->
+        <div id="tenantCategoryGroup">
+          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Tenant Type</label>
+          <select id="regTenantType" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+            <option value="Bachelor">Bachelor / Working Professional</option>
+            <option value="Family">Family</option>
+            <option value="Student">Student</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Full Legal Name</label>
+          <input type="text" id="regName" required placeholder="e.g. Arjun Mehta" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Email Address</label>
+          <input type="email" id="regEmail" required placeholder="name@example.com" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Phone Number</label>
+          <input type="tel" id="regPhone" required placeholder="+91 98765 43210" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Password</label>
+          <input type="password" id="regPassword" required placeholder="At least 6 characters" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="padding: 0.8rem; font-size: 1rem;">
+          Create Account
+        </button>
+      </form>
+
+    </div>
+
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    function switchAuthTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('loginForm').style.display = isLogin ? 'flex' : 'none';
+      document.getElementById('registerForm').style.display = isLogin ? 'none' : 'flex';
+      
+      document.getElementById('tabLogin').style.borderBottomColor = isLogin ? 'var(--primary)' : 'transparent';
+      document.getElementById('tabLogin').style.color = isLogin ? 'var(--primary)' : 'var(--text-muted)';
+      
+      document.getElementById('tabRegister').style.borderBottomColor = isLogin ? 'transparent' : 'var(--primary)';
+      document.getElementById('tabRegister').style.color = isLogin ? 'var(--text-muted)' : 'var(--primary)';
+    }
+
+    function toggleTenantOptions(isTenant) {
+      document.getElementById('tenantCategoryGroup').style.display = isTenant ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Stays | StayPact</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body style="height: 100vh; overflow: hidden;">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container-fluid nav-wrapper" style="padding: 0 1.5rem;">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
+        <span>Stay<span class="logo-highlight">Pact</span></span>
+      </a>
+
+      <!-- Search in header -->
+      <div style="max-width: 400px; width: 100%; position: relative;">
+        <input type="text" id="filterSearch" placeholder="Search locality (e.g. Koramangala, Bandra)..." style="width: 100%; padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid var(--border); background: var(--bg-subtle);">
+      </div>
+
+      <a href="agreement.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-file-contract"></i> Mutual Pacts</a>
+    </div>
+  </nav>
+
+  <!-- Split View Explorer -->
+  <div class="explorer-layout">
+    
+    <!-- Left Pane: Filters & Cards Grid -->
+    <div class="explorer-listings-pane">
+      
+      <!-- Filter Bar -->
+      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+        <div>
+          <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">City</label>
+          <select id="filterCity" style="width: 100%; padding: 0.4rem; border: 1px solid var(--border); border-radius: 6px;">
+            <option value="all">All Cities</option>
+            <option value="Bengaluru">Bengaluru</option>
+            <option value="Mumbai">Mumbai</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Tenant Preference</label>
+          <select id="filterTarget" style="width: 100%; padding: 0.4rem; border: 1px solid var(--border); border-radius: 6px;">
+            <option value="all">All Tenants</option>
+            <option value="bachelors_allowed">Bachelors Allowed</option>
+            <option value="families_only">Families Only</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Space Type</label>
+          <select id="filterType" style="width: 100%; padding: 0.4rem; border: 1px solid var(--border); border-radius: 6px;">
+            <option value="all">All Spaces</option>
+            <option value="single_room">Private Room</option>
+            <option value="1bhk">1 BHK</option>
+            <option value="2bhk">2 BHK</option>
+            <option value="3bhk">3 BHK</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Properties Grid -->
+      <div class="property-grid" id="listingsContainer" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"></div>
+    </div>
+
+    <!-- Right Pane: Leaflet Interactive Map -->
+    <div class="explorer-map-pane">
+      <div id="leafletMap"></div>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', initExplorePage);
+  </script>
+</body>
+</html>

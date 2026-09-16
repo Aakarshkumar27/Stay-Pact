@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayPact | On-Demand Monthly Home & Room Rentals</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
+        <span>Stay<span class="logo-highlight">Pact</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="explore.html" class="nav-link"><i class="fa-solid fa-compass"></i> Explore Stays</a></li>
+        <li><a href="explore.html?target=bachelors_allowed" class="nav-link"><i class="fa-solid fa-user-group"></i> Bachelors</a></li>
+        <li><a href="explore.html?target=families_only" class="nav-link"><i class="fa-solid fa-people-roof"></i> Families</a></li>
+        <li><a href="agreement.html" class="nav-link"><i class="fa-solid fa-file-contract"></i> Mutual Pacts</a></li>
+      </ul>
+
+      <div>
+        <a href="explore.html" class="btn btn-primary btn-sm">Find Rooms & Homes</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header style="background: linear-gradient(180deg, #F0FDFA 0%, #F8FAFC 100%); padding: 4.5rem 0 3.5rem;">
+    <div class="container" style="text-align: center;">
+      <div style="max-width: 800px; margin: 0 auto 2.5rem;">
+        <span class="badge badge-verified" style="margin-bottom: 1rem;"><i class="fa-solid fa-shield"></i> Zero Brokerage &bull; Fair Mutual Terms</span>
+        <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem;">
+          Rent Rooms & Homes on <span style="color: var(--primary);">Mutually Agreed Terms</span>
+        </h1>
+        <p style="font-size: 1.1rem; color: var(--text-secondary);">
+          Transparent monthly rentals for bachelors and families. Pre-agreed guest policies, fair notice periods, and instant digital pacts.
+        </p>
+      </div>
+
+      <!-- Hero Search Widget (Uber/Oyo style) -->
+      <div class="hero-search-wrapper" style="max-width: 950px; margin: 0 auto;">
+        <div class="search-field">
+          <label><i class="fa-solid fa-location-dot"></i> City</label>
+          <select id="heroCity">
+            <option value="Bengaluru">Bengaluru</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Delhi NCR">Delhi NCR</option>
+            <option value="Pune">Pune</option>
+          </select>
+        </div>
+
+        <div class="search-field">
+          <label><i class="fa-solid fa-users"></i> Tenant Type</label>
+          <select id="heroTarget">
+            <option value="bachelors_allowed">Bachelor / Working Pro</option>
+            <option value="families_only">Family</option>
+            <option value="all">Any Tenant</option>
+          </select>
+        </div>
+
+        <div class="search-field">
+          <label><i class="fa-solid fa-bed"></i> Room / Space</label>
+          <select id="heroType">
+            <option value="all">All Living Spaces</option>
+            <option value="single_room">Private Room</option>
+            <option value="1bhk">1 BHK Flat</option>
+            <option value="2bhk">2 BHK Flat</option>
+            <option value="3bhk">3 BHK Apartment</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" onclick="searchFromHero()" style="height: 52px; padding: 0 1.8rem;">
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </div>
+
+      <!-- Quick Category Pills -->
+      <div class="category-pills-row" style="justify-content: center; margin-top: 1.5rem;">
+        <a href="explore.html?target=bachelors_allowed" class="category-pill"><i class="fa-solid fa-bolt" style="color: #6366F1;"></i> Bachelor Friendly</a>
+        <a href="explore.html?target=families_only" class="category-pill"><i class="fa-solid fa-tree" style="color: #10B981;"></i> Family Gated Societies</a>
+        <a href="explore.html?type=single_room" class="category-pill"><i class="fa-solid fa-door-open" style="color: #F59E0B;"></i> Private Ensuite Rooms</a>
+        <a href="agreement.html" class="category-pill"><i class="fa-solid fa-stamp" style="color: #8B5CF6;"></i> 30-Day Notice Guarantee</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Featured Stays -->
+  <section style="padding: 4rem 0;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+          <h2 style="font-size: 1.8rem; font-weight: 800;">Featured Living Spaces</h2>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">Verified landlords with transparent mutual conditions.</p>
+        </div>
+        <a href="explore.html" class="btn btn-outline btn-sm">Explore All &rarr;</a>
+      </div>
+
+      <div class="property-grid" id="homeFeaturedGrid"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo" style="color: white; margin-bottom: 0.8rem;">
+            <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
+            <span>Stay<span class="logo-highlight">Pact</span></span>
+          </div>
+          <p style="font-size: 0.88rem; line-height: 1.6;">On-demand transparent monthly rental agreements for bachelors, families, and property owners.</p>
+        </div>
+        <div>
+          <h4 class="footer-title">Explore</h4>
+          <ul class="footer-links">
+            <li><a href="explore.html?city=Bengaluru">Bengaluru Stays</a></li>
+            <li><a href="explore.html?city=Mumbai">Mumbai Apartments</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Legal</h4>
+          <ul class="footer-links">
+            <li><a href="agreement.html">Sample Mutual Pact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Contact</h4>
+          <p style="font-size: 0.88rem;">support@staypact.com</p>
+        </div>
+      </div>
+      <div style="text-align: center; border-top: 1px solid #1E293B; padding-top: 1.5rem; font-size: 0.8rem;">
+        &copy; 2026 StayPact Platform. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const props = getProperties().slice(0, 3);
+      const container = document.getElementById('homeFeaturedGrid');
+      container.innerHTML = props.map(p => `
+        <div class="property-card">
+          <div class="card-img-container">
+            <img src="${p.images[0]}" alt="${p.title}">
+            <div class="card-badge-top-left">
+              <span class="badge ${p.targetTenant === 'bachelors_allowed' ? 'badge-bachelor' : 'badge-family'}">
+                ${p.targetTenant === 'bachelors_allowed' ? 'Bachelors' : 'Families'}
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-location"><i class="fa-solid fa-location-dot"></i> ${p.locality}, ${p.city}</div>
+            <a href="property-detail.html?id=${p.id}" class="card-title">${p.title}</a>
+            <div class="card-terms-box">
+              <span><i class="fa-solid fa-handshake"></i> ${p.noticeDays}-Day Notice</span>
+              <span><i class="fa-solid fa-shield"></i> Verified</span>
+            </div>
+            <div class="card-footer">
+              <span class="price-amount">₹${p.monthlyRent.toLocaleString('en-IN')}/mo</span>
+              <a href="property-detail.html?id=${p.id}" class="btn btn-primary btn-sm">Inspect & Book</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    });
+
+    function searchFromHero() {
+      const city = document.getElementById('heroCity').value;
+      const target = document.getElementById('heroTarget').value;
+      const type = document.getElementById('heroType').value;
+      window.location.href = `explore.html?city=${city}&target=${target}&type=${type}`;
+    }
+  </script>
+</body>
+</html>
