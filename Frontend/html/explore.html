@@ -3,91 +3,213 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Explore Stays | StayPact</title>
+  <title>Explore Stays | StayPact Verified Monthly Living</title>
   
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <!-- Leaflet Map CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
+  
+  <style>
+    .map-price-pin {
+      background: #0F172A;
+      color: white;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      white-space: nowrap;
+      border: 2px solid white;
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .map-price-pin:hover, .map-price-pin.active {
+      background: var(--primary);
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(13, 148, 136, 0.4);
+    }
+    .filter-chip-cb {
+      display: none;
+    }
+    .filter-chip-label {
+      padding: 0.35rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      background: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: var(--transition-fast);
+      user-select: none;
+    }
+    .filter-chip-cb:checked + .filter-chip-label {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+  </style>
 </head>
-<body style="height: 100vh; overflow: hidden;">
+<body style="overflow: hidden; height: 100vh;">
 
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="container-fluid nav-wrapper" style="padding: 0 1.5rem;">
+    <div class="container-fluid nav-wrapper">
       <a href="index.html" class="brand-logo">
-        <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
-        <span>Stay<span class="logo-highlight">Pact</span></span>
+        <div class="logo-symbol"><i class="fa-solid fa-handshake-simple"></i></div>
+        <span class="logo-text">Stay<span class="logo-highlight">Pact</span></span>
       </a>
 
-      <!-- Search in header -->
-      <div style="max-width: 400px; width: 100%; position: relative;">
-        <input type="text" id="filterSearch" placeholder="Search locality (e.g. Koramangala, Bandra)..." style="width: 100%; padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid var(--border); background: var(--bg-subtle);">
+      <!-- Quick Search in Header -->
+      <div style="max-width: 440px; width: 100%; position: relative;">
+        <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 13px; color: var(--text-muted);"></i>
+        <input type="text" id="filterSearch" placeholder="Search locality (e.g. Koramangala, Bandra)..." style="width: 100%; padding: 0.6rem 1rem 0.6rem 2.6rem; border-radius: var(--radius-full); border: 1px solid var(--border); font-size: 0.88rem; outline: none; background: white; box-shadow: var(--shadow-xs);">
       </div>
 
-      <a href="agreement.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-file-contract"></i> Mutual Pacts</a>
+      <div class="nav-persona-switch">
+        <a href="explore.html" class="nav-persona-btn active"><i class="fa-solid fa-house"></i> Rent</a>
+        <a href="dashboard-landlord.html" class="nav-persona-btn"><i class="fa-solid fa-key"></i> Host</a>
+      </div>
+
+      <div class="nav-actions" id="navActions">
+        <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
+        <a href="login.html?tab=signup" class="btn btn-primary btn-sm">Join</a>
+      </div>
     </div>
   </nav>
 
-  <!-- Split View Explorer -->
+  <!-- Split View Explorer Layout -->
   <div class="explorer-layout">
     
-    <!-- Left Pane: Filters & Cards Grid -->
+    <!-- Left Pane: Filters & Property Listings -->
     <div class="explorer-listings-pane">
       
-      <!-- Filter Bar -->
-      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-        <div>
-          <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">City</label>
-          <select id="filterCity" style="width: 100%; padding: 0.4rem; border: 1px solid var(--border); border-radius: 6px;">
-            <option value="all">All Cities</option>
-            <option value="Bengaluru">Bengaluru</option>
-            <option value="Mumbai">Mumbai</option>
-          </select>
+      <!-- Top Filter Controls Box -->
+      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.85rem; margin-bottom: 1rem;">
+          
+          <div>
+            <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">City</label>
+            <select id="filterCity" style="width: 100%; padding: 0.5rem 0.7rem; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; outline: none; background: var(--bg-subtle);">
+              <option value="all">All Cities</option>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Delhi NCR">Delhi NCR</option>
+              <option value="Pune">Pune</option>
+              <option value="Hyderabad">Hyderabad</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Tenant Type</label>
+            <select id="filterTarget" style="width: 100%; padding: 0.5rem 0.7rem; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; outline: none; background: var(--bg-subtle);">
+              <option value="all">All Tenants</option>
+              <option value="bachelors_allowed">🎓 Bachelors OK</option>
+              <option value="families_only">👨‍👩‍👧 Families Only</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Space Type</label>
+            <select id="filterType" style="width: 100%; padding: 0.5rem 0.7rem; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; outline: none; background: var(--bg-subtle);">
+              <option value="all">All Types</option>
+              <option value="single_room">Private Room</option>
+              <option value="1bhk">1 BHK Flat</option>
+              <option value="2bhk">2 BHK Flat</option>
+              <option value="3bhk">3 BHK Society</option>
+              <option value="studio">Studio</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Furnishing</label>
+            <select id="filterFurnishing" style="width: 100%; padding: 0.5rem 0.7rem; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; outline: none; background: var(--bg-subtle);">
+              <option value="all">Any Furnishing</option>
+              <option value="fully_furnished">Fully Furnished</option>
+              <option value="semi_furnished">Semi Furnished</option>
+            </select>
+          </div>
+
         </div>
 
-        <div>
-          <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Tenant Preference</label>
-          <select id="filterTarget" style="width: 100%; padding: 0.4rem; border: 1px solid var(--border); border-radius: 6px;">
-            <option value="all">All Tenants</option>
-            <option value="bachelors_allowed">Bachelors Allowed</option>
-            <option value="families_only">Families Only</option>
-          </select>
-        </div>
+        <!-- Budget Range Slider & Amenity Chips -->
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 0.9rem; border-top: 1px solid var(--border);">
+          <div style="display: flex; align-items: center; gap: 0.8rem; flex: 1; min-width: 240px; max-width: 320px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Max Rent:</span>
+            <input type="range" id="filterRentRange" min="10000" max="100000" step="2000" value="80000" style="flex: 1; accent-color: var(--primary);">
+            <span id="rentRangeDisplay" style="font-size: 0.9rem; font-weight: 900; color: var(--primary-dark);">₹80,000</span>
+          </div>
 
-        <div>
-          <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Space Type</label>
-          <select id="filterType" style="width: 100%; padding: 0.4rem; border: 1px solid var(--border); border-radius: 6px;">
-            <option value="all">All Spaces</option>
-            <option value="single_room">Private Room</option>
-            <option value="1bhk">1 BHK</option>
-            <option value="2bhk">2 BHK</option>
-            <option value="3bhk">3 BHK</option>
-          </select>
+          <!-- Amenity Chips -->
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <label>
+              <input type="checkbox" value="wifi" class="amenity-filter-cb filter-chip-cb">
+              <span class="filter-chip-label"><i class="fa-solid fa-wifi"></i> WiFi</span>
+            </label>
+            <label>
+              <input type="checkbox" value="ac" class="amenity-filter-cb filter-chip-cb">
+              <span class="filter-chip-label"><i class="fa-solid fa-snowflake"></i> AC</span>
+            </label>
+            <label>
+              <input type="checkbox" value="kitchen" class="amenity-filter-cb filter-chip-cb">
+              <span class="filter-chip-label"><i class="fa-solid fa-kitchen-set"></i> Kitchen</span>
+            </label>
+            <label>
+              <input type="checkbox" value="parking_car" class="amenity-filter-cb filter-chip-cb">
+              <span class="filter-chip-label"><i class="fa-solid fa-square-parking"></i> Parking</span>
+            </label>
+          </div>
+
+          <div>
+            <select id="filterSort" style="padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-full); font-size: 0.82rem; font-weight: 700; background: white;">
+              <option value="newest">Sort: Recommended</option>
+              <option value="price_asc">Rent: Low to High</option>
+              <option value="price_desc">Rent: High to Low</option>
+              <option value="rating">Top Rated Stays</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <!-- Properties Grid -->
-      <div class="property-grid" id="listingsContainer" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"></div>
+      <!-- Results Header -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 900; color: #0F172A;" id="resultsCount">Loading Stays...</h3>
+        <span class="badge badge-verified"><i class="fa-solid fa-shield-halved"></i> 100% Backed by Mutual Pact</span>
+      </div>
+
+      <!-- Property Grid -->
+      <div class="property-grid" id="listingsContainer" style="grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));">
+        <!-- Injected via explore.js -->
+      </div>
     </div>
 
-    <!-- Right Pane: Leaflet Interactive Map -->
+    <!-- Right Pane: Interactive Map -->
     <div class="explorer-map-pane">
       <div id="leafletMap"></div>
     </div>
 
   </div>
 
+  <!-- Leaflet Map JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="js/app.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', initExplorePage);
-  </script>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/explore.js"></script>
 </body>
 </html>

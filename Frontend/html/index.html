@@ -3,25 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StayPact | On-Demand Monthly Home & Room Rentals</title>
+  <title>StayPact | On-Demand Monthly Rentals on Fair Mutual Terms</title>
+  <meta name="description" content="Rent rooms, flats, and houses on transparent monthly terms for bachelors and families. Zero brokerage, zero moral policing, 48h deposit refund guarantee.">
   
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
+  <!-- Modern Design System Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- Floating Glass Top Navigation -->
   <nav class="navbar">
     <div class="container nav-wrapper">
       <a href="index.html" class="brand-logo">
-        <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
-        <span>Stay<span class="logo-highlight">Pact</span></span>
+        <div class="logo-symbol"><i class="fa-solid fa-handshake-simple"></i></div>
+        <span class="logo-text">Stay<span class="logo-highlight">Pact</span></span>
       </a>
+
+      <!-- Persona Switcher -->
+      <div class="nav-persona-switch">
+        <a href="explore.html" class="nav-persona-btn active"><i class="fa-solid fa-house"></i> Rent a Stay</a>
+        <a href="dashboard-landlord.html" class="nav-persona-btn"><i class="fa-solid fa-key"></i> List as Landlord</a>
+      </div>
 
       <ul class="nav-links">
         <li><a href="explore.html" class="nav-link"><i class="fa-solid fa-compass"></i> Explore Stays</a></li>
@@ -30,159 +39,648 @@
         <li><a href="agreement.html" class="nav-link"><i class="fa-solid fa-file-contract"></i> Mutual Pacts</a></li>
       </ul>
 
-      <div>
-        <a href="explore.html" class="btn btn-primary btn-sm">Find Rooms & Homes</a>
+      <div class="nav-actions" id="navActions">
+        <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
+        <a href="login.html?tab=signup" class="btn btn-primary btn-sm">Join StayPact</a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Header -->
-  <header style="background: linear-gradient(180deg, #F0FDFA 0%, #F8FAFC 100%); padding: 4.5rem 0 3.5rem;">
-    <div class="container" style="text-align: center;">
-      <div style="max-width: 800px; margin: 0 auto 2.5rem;">
-        <span class="badge badge-verified" style="margin-bottom: 1rem;"><i class="fa-solid fa-shield"></i> Zero Brokerage &bull; Fair Mutual Terms</span>
-        <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem;">
-          Rent Rooms & Homes on <span style="color: var(--primary);">Mutually Agreed Terms</span>
-        </h1>
-        <p style="font-size: 1.1rem; color: var(--text-secondary);">
-          Transparent monthly rentals for bachelors and families. Pre-agreed guest policies, fair notice periods, and instant digital pacts.
-        </p>
-      </div>
+  <!-- ============================================================
+       Cinematic Split Hero Section
+       ============================================================ -->
+  <header style="padding: 4rem 0 3.5rem; position: relative; overflow: hidden; background: linear-gradient(180deg, #F8FAFC 0%, #FBFBFA 100%);">
+    
+    <!-- Ambient Blur Glows -->
+    <div class="ambient-glow-orb orb-teal"></div>
+    <div class="ambient-glow-orb orb-indigo"></div>
 
-      <!-- Hero Search Widget (Uber/Oyo style) -->
-      <div class="hero-search-wrapper" style="max-width: 950px; margin: 0 auto;">
-        <div class="search-field">
-          <label><i class="fa-solid fa-location-dot"></i> City</label>
-          <select id="heroCity">
-            <option value="Bengaluru">Bengaluru</option>
-            <option value="Mumbai">Mumbai</option>
-            <option value="Delhi NCR">Delhi NCR</option>
-            <option value="Pune">Pune</option>
-          </select>
+    <div class="container" style="position: relative; z-index: 10;">
+      <div style="display: grid; grid-template-columns: 1.25fr 1fr; gap: 3.5rem; align-items: center;">
+        
+        <!-- Left Hero Column: Value Proposition & Dynamic Command Bar -->
+        <div>
+          
+          <!-- Live Trust Pulse -->
+          <div style="display: inline-flex; align-items: center; gap: 0.6rem; background: white; border: 1px solid var(--border); padding: 0.4rem 0.95rem; border-radius: var(--radius-full); box-shadow: var(--shadow-xs); margin-bottom: 1.5rem;">
+            <span class="badge badge-verified badge-live-pulse" style="padding: 0; background: transparent; border: none; font-size: 0.82rem; text-transform: none;">
+              <strong>4,280+ Active Living Pacts</strong> Across India
+            </span>
+          </div>
+
+          <!-- Editorial Headline -->
+          <h1 style="font-size: 3.2rem; font-weight: 900; line-height: 1.15; letter-spacing: -0.04em; margin-bottom: 1.2rem; color: #0F172A;">
+            Renting Re-architected on <span style="background: linear-gradient(135deg, #0D9488 0%, #4F46E5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Fair Mutual Terms</span>
+          </h1>
+
+          <p style="font-size: 1.12rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 2.2rem; max-width: 580px;">
+            Like Uber & Oyo for monthly living. Pre-agreed house rules, guaranteed 48-hour deposit refunds, and zero moral policing sealed in transparent digital contracts.
+          </p>
+
+          <!-- Floating Luxury Search Command Bar -->
+          <div class="hero-search-command">
+            
+            <div class="search-segment">
+              <label><i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> Location</label>
+              <select id="heroCity">
+                <option value="Bengaluru">Bengaluru (Koramangala, HSR)</option>
+                <option value="Mumbai">Mumbai (Bandra, Powai, Andheri)</option>
+                <option value="Delhi NCR">Delhi NCR (Cyber City, Gurgaon)</option>
+                <option value="Pune">Pune (Viman Nagar, Hinjewadi)</option>
+                <option value="Hyderabad">Hyderabad (Gachibowli, Hitec)</option>
+              </select>
+            </div>
+
+            <div class="search-segment">
+              <label><i class="fa-solid fa-users" style="color: var(--secondary);"></i> Persona</label>
+              <select id="heroTarget">
+                <option value="bachelors_allowed">🎓 Bachelor / Working Pro</option>
+                <option value="families_only">👨‍👩‍👧 Family with Kids</option>
+                <option value="all">🌐 Any Tenant Type</option>
+              </select>
+            </div>
+
+            <div class="search-segment">
+              <label><i class="fa-solid fa-bed" style="color: var(--accent-amber);"></i> Space</label>
+              <select id="heroType">
+                <option value="all">Any Space Type</option>
+                <option value="single_room">Private Room</option>
+                <option value="1bhk">1 BHK Flat</option>
+                <option value="2bhk">2 BHK Flat</option>
+                <option value="3bhk">3 BHK Gated Society</option>
+                <option value="studio">Studio Apartment</option>
+              </select>
+            </div>
+
+            <button class="search-btn-trigger" onclick="executeHeroSearch()">
+              <i class="fa-solid fa-magnifying-glass"></i> Find Stays
+            </button>
+          </div>
+
+          <!-- Quick Locality Chips -->
+          <div class="locality-chips-row">
+            <span class="locality-chip-label">Popular Hubs:</span>
+            <span class="locality-chip" onclick="quickFilterCity('Bengaluru')"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> Koramangala</span>
+            <span class="locality-chip" onclick="quickFilterCity('Bengaluru')">HSR Layout</span>
+            <span class="locality-chip" onclick="quickFilterCity('Mumbai')">Bandra West</span>
+            <span class="locality-chip" onclick="quickFilterCity('Pune')">Viman Nagar</span>
+            <span class="locality-chip" onclick="quickFilterCity('Delhi NCR')">Cyber City</span>
+          </div>
+
         </div>
 
-        <div class="search-field">
-          <label><i class="fa-solid fa-users"></i> Tenant Type</label>
-          <select id="heroTarget">
-            <option value="bachelors_allowed">Bachelor / Working Pro</option>
-            <option value="families_only">Family</option>
-            <option value="all">Any Tenant</option>
-          </select>
+        <!-- Right Hero Column: Living Bento Showcase -->
+        <div class="hero-bento-grid">
+          
+          <!-- Bento Card 1: Live Interactive Mutual Pact Card -->
+          <div class="bento-card-pact">
+            <div class="pact-header-row">
+              <span class="pact-doc-id"><i class="fa-solid fa-file-shield"></i> PACT-BLR-8921</span>
+              <span class="badge badge-verified"><i class="fa-solid fa-check"></i> Active & Sealed</span>
+            </div>
+
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-top: 0.5rem;">Mutual Living Agreement</h3>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem;">Between Rajesh Sharma (Owner) & Arvind K. (Software Eng)</p>
+            </div>
+
+            <div class="pact-clauses-grid">
+              <div class="pact-clause-mini">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>30-Day Flexible Exit</span>
+              </div>
+              <div class="pact-clause-mini">
+                <i class="fa-solid fa-users"></i>
+                <span>Friends Welcome (No Curfew)</span>
+              </div>
+              <div class="pact-clause-mini">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>₹50,000 Escrow Deposit</span>
+              </div>
+              <div class="pact-clause-mini">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Veg & Non-Veg Cooking OK</span>
+              </div>
+            </div>
+
+            <div class="pact-seal-footer">
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">E-Signed: Sep 2026</span>
+              <div class="signature-badge">
+                <i class="fa-solid fa-fingerprint" style="font-size: 1.1rem;"></i>
+                <span>Legally Binding Digital Seal</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Card 2: 48h Escrow Guarantee Meter -->
+          <div class="bento-card-escrow">
+            <div>
+              <div class="escrow-icon-circle">
+                <i class="fa-solid fa-vault"></i>
+              </div>
+              <h4 class="escrow-title">48h Deposit Refund</h4>
+              <p class="escrow-desc">Security deposits held safely in escrow. Guaranteed prompt release on peaceful move-out inspection.</p>
+            </div>
+            <div class="escrow-timeline-pill">
+              <i class="fa-solid fa-circle-check"></i> Zero Broker Deductions
+            </div>
+          </div>
+
+          <!-- Bento Card 3: Curated Stay Peek -->
+          <div class="bento-card-stay">
+            <div class="stay-preview-media">
+              <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Koramangala Stay">
+              <div class="stay-floating-rating">
+                <i class="fa-solid fa-star" style="color: #F59E0B;"></i> 4.95 (18)
+              </div>
+            </div>
+            <div class="stay-preview-body">
+              <div>
+                <div class="stay-preview-title">Sunlit 1BHK Studio, Koramangala</div>
+                <div class="stay-preview-rent">₹26,000 <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">/ mo</span></div>
+              </div>
+              <a href="explore.html" style="font-size: 0.78rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0.25rem;">
+                Inspect Pact <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
         </div>
 
-        <div class="search-field">
-          <label><i class="fa-solid fa-bed"></i> Room / Space</label>
-          <select id="heroType">
-            <option value="all">All Living Spaces</option>
-            <option value="single_room">Private Room</option>
-            <option value="1bhk">1 BHK Flat</option>
-            <option value="2bhk">2 BHK Flat</option>
-            <option value="3bhk">3 BHK Apartment</option>
-          </select>
-        </div>
-
-        <button class="btn btn-primary" onclick="searchFromHero()" style="height: 52px; padding: 0 1.8rem;">
-          <i class="fa-solid fa-magnifying-glass"></i> Search
-        </button>
-      </div>
-
-      <!-- Quick Category Pills -->
-      <div class="category-pills-row" style="justify-content: center; margin-top: 1.5rem;">
-        <a href="explore.html?target=bachelors_allowed" class="category-pill"><i class="fa-solid fa-bolt" style="color: #6366F1;"></i> Bachelor Friendly</a>
-        <a href="explore.html?target=families_only" class="category-pill"><i class="fa-solid fa-tree" style="color: #10B981;"></i> Family Gated Societies</a>
-        <a href="explore.html?type=single_room" class="category-pill"><i class="fa-solid fa-door-open" style="color: #F59E0B;"></i> Private Ensuite Rooms</a>
-        <a href="agreement.html" class="category-pill"><i class="fa-solid fa-stamp" style="color: #8B5CF6;"></i> 30-Day Notice Guarantee</a>
       </div>
     </div>
   </header>
 
-  <!-- Featured Stays -->
-  <section style="padding: 4rem 0;">
+  <!-- ============================================================
+       Interactive Living Pact Simulator (Killer UX Feature)
+       ============================================================ -->
+  <section style="padding: 5rem 0; background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-        <div>
-          <h2 style="font-size: 1.8rem; font-weight: 800;">Featured Living Spaces</h2>
-          <p style="color: var(--text-secondary); font-size: 0.95rem;">Verified landlords with transparent mutual conditions.</p>
-        </div>
-        <a href="explore.html" class="btn btn-outline btn-sm">Explore All &rarr;</a>
+      
+      <div class="section-header">
+        <span class="section-eyebrow"><i class="fa-solid fa-sliders"></i> Interactive Simulator</span>
+        <h2 class="section-title">See How Mutual Pacts Protect Both Sides</h2>
+        <p class="section-desc">Traditional renting relies on verbal promises that get broken. StayPact turns mutually agreed terms into transparent, legally binding digital pacts before you move in.</p>
       </div>
 
-      <div class="property-grid" id="homeFeaturedGrid"></div>
+      <div class="pact-simulator-wrapper">
+        
+        <!-- Persona Switch Tabs -->
+        <div class="simulator-tabs-bar">
+          <button class="simulator-tab active" onclick="switchSimulatorTab('bachelor', this)">
+            <i class="fa-solid fa-laptop-code" style="color: var(--secondary);"></i> 1. Bachelor & Young Pro
+          </button>
+          <button class="simulator-tab" onclick="switchSimulatorTab('family', this)">
+            <i class="fa-solid fa-people-roof" style="color: var(--accent-emerald);"></i> 2. Family Haven
+          </button>
+          <button class="simulator-tab" onclick="switchSimulatorTab('landlord', this)">
+            <i class="fa-solid fa-key" style="color: var(--accent-amber);"></i> 3. Property Owner
+          </button>
+        </div>
+
+        <!-- Tab Body Content (Dynamically updated via JS) -->
+        <div class="simulator-content-body" id="simulatorContent">
+          
+          <!-- Interactive Terms List (Left) -->
+          <div class="simulator-controls" id="simControls">
+            <div class="simulator-interactive-item">
+              <div class="simulator-item-icon"><i class="fa-solid fa-ban-smoking"></i></div>
+              <div class="simulator-item-text">
+                <h4>Zero Moral Policing Guaranteed</h4>
+                <p>Pre-agreed visitor freedom and lifestyle independence guaranteed in writing without landlord interference.</p>
+              </div>
+            </div>
+
+            <div class="simulator-interactive-item">
+              <div class="simulator-item-icon"><i class="fa-solid fa-calendar-check"></i></div>
+              <div class="simulator-item-text">
+                <h4>Standard 30-Day Notice Period</h4>
+                <p>No 11-month lock-in traps. Exit whenever your project or job relocates with a fair 30-day notice.</p>
+              </div>
+            </div>
+
+            <div class="simulator-interactive-item">
+              <div class="simulator-item-icon"><i class="fa-solid fa-shield-heart"></i></div>
+              <div class="simulator-item-text">
+                <h4>Guaranteed Deposit Return in 48 Hours</h4>
+                <p>Deposit held securely in escrow and returned promptly after transparent move-out checklist inspection.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Digital Pact Live Preview Document (Right) -->
+          <div class="live-pact-doc-preview" id="simDocPreview">
+            <div class="doc-stamp-header">
+              <div>
+                <div style="font-size: 0.72rem; color: #94A3B8; font-weight: 700; text-transform: uppercase;">MUTUAL PACT PREVIEW</div>
+                <div style="font-size: 1.1rem; font-weight: 800; color: white;" id="simDocTitle">Bachelor Living Pact</div>
+              </div>
+              <span class="badge badge-verified"><i class="fa-solid fa-lock"></i> Protected</span>
+            </div>
+
+            <div class="doc-clause-row">
+              <div class="doc-clause-label">Notice Period Standard</div>
+              <div class="doc-clause-val" id="simDocNotice">30 Days Fair Notice Guaranteed</div>
+            </div>
+
+            <div class="doc-clause-row">
+              <div class="doc-clause-label">Guest & Visitor Policy</div>
+              <div class="doc-clause-val" id="simDocGuest">Friends and guests welcome with mutual respect</div>
+            </div>
+
+            <div class="doc-clause-row">
+              <div class="doc-clause-label">Cooking & Diet Allowance</div>
+              <div class="doc-clause-val" id="simDocFood">All cuisines (Veg & Non-Veg) permitted</div>
+            </div>
+
+            <div class="doc-clause-row">
+              <div class="doc-clause-label">Security Deposit Refund</div>
+              <div class="doc-clause-val" id="simDocDeposit">Escrow release within 48 hours of move-out</div>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 0.75rem; color: #64748B;">Both Parties Consent Verified</span>
+              <a href="agreement.html" class="btn btn-sm btn-glow-teal">View Full Pact Spec</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
+  <!-- ============================================================
+       Modern Bento Comparison: Why StayPact Wins
+       ============================================================ -->
+  <section style="padding: 5rem 0; background: var(--bg-main);">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-eyebrow"><i class="fa-solid fa-trophy"></i> The New Standard</span>
+        <h2 class="section-title">Why Renting on StayPact Feels Like 2026</h2>
+        <p class="section-desc">We eliminated brokers, arbitrary restrictions, and deposit disputes by putting mutual respect on a digital foundation.</p>
+      </div>
+
+      <div class="bento-comparison-grid">
+        
+        <!-- Bento Cell 1: Large -->
+        <div class="bento-cell bento-cell-lg">
+          <div>
+            <div class="bento-cell-icon icon-teal"><i class="fa-solid fa-file-contract"></i></div>
+            <h3>1-Click Digital Living Pacts</h3>
+            <p>Skip expensive stamp paper runs, notarization hassles, and vague oral agreements. Both landlord and tenant sign a timestamped, legally binding mutual agreement right on their phone in under 60 seconds.</p>
+          </div>
+          <div style="margin-top: 1.5rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+            <span class="badge badge-verified"><i class="fa-solid fa-check"></i> Timestamped Hash</span>
+            <span class="badge badge-verified"><i class="fa-solid fa-check"></i> Pre-Agreed House Rules</span>
+          </div>
+        </div>
+
+        <!-- Bento Cell 2: Medium -->
+        <div class="bento-cell bento-cell-md">
+          <div>
+            <div class="bento-cell-icon icon-amber"><i class="fa-solid fa-vault"></i></div>
+            <h3>48-Hour Deposit Escrow</h3>
+            <p>No more fighting landlords for months to get your deposit back. Security deposits are standardized and disbursed within 48 hours of peaceful key handover.</p>
+          </div>
+          <div style="margin-top: 1.5rem;">
+            <span class="badge badge-escrow"><i class="fa-solid fa-shield"></i> 100% Escrow Guarantee</span>
+          </div>
+        </div>
+
+        <!-- Bento Cell 3: Small -->
+        <div class="bento-cell bento-cell-sm">
+          <div>
+            <div class="bento-cell-icon icon-indigo"><i class="fa-solid fa-id-card-clip"></i></div>
+            <h3>100% Verified Profiles</h3>
+            <p>Every landlord and tenant passes government ID verification and professional check before chatting, creating an ecosystem of verified trust.</p>
+          </div>
+        </div>
+
+        <!-- Bento Cell 4: Small -->
+        <div class="bento-cell bento-cell-sm">
+          <div>
+            <div class="bento-cell-icon icon-rose"><i class="fa-solid fa-ban"></i></div>
+            <h3>Zero Brokerage Commissions</h3>
+            <p>Direct communication with property owners. Save ₹25,000 to ₹60,000 on every move with transparent, direct monthly living agreements.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Curated Magazine-Style Featured Listings Grid
+       ============================================================ -->
+  <section style="padding: 5rem 0; background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span class="section-eyebrow"><i class="fa-solid fa-sparkles"></i> Curated Homes</span>
+          <h2 style="font-size: 2.2rem; font-weight: 900; color: #0F172A; letter-spacing: -0.03em;">Popular Stays with Verified Pacts</h2>
+        </div>
+        <a href="explore.html" class="btn btn-outline">Explore All 120+ Stays <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- Injected via JavaScript from API / Seed Database -->
+      <div class="property-grid" id="homeFeaturedGrid">
+        <!-- Dynamically rendered -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Landlord Call to Action (Architectural Banner)
+       ============================================================ -->
+  <section style="padding: 5rem 0; background: var(--bg-dark); color: white; position: relative; overflow: hidden;">
+    <div class="container" style="position: relative; z-index: 10;">
+      <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 3rem; align-items: center;">
+        <div>
+          <span class="badge badge-verified" style="margin-bottom: 1rem;"><i class="fa-solid fa-star"></i> For Property Owners</span>
+          <h2 style="font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 1rem; color: white;">
+            Have a Room or Flat? List on Clear Terms with Zero Hassle.
+          </h2>
+          <p style="color: #94A3B8; font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
+            Get verified, respectful tenants who respect your property. Pre-define your house rules, collect on-time digital rent payments, and eliminate broker commissions.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="dashboard-landlord.html" class="btn btn-glow-teal btn-lg"><i class="fa-solid fa-plus"></i> List Your Property Free</a>
+            <a href="agreement.html" class="btn btn-outline btn-lg" style="background: rgba(255, 255, 255, 0.05); color: white; border-color: rgba(255, 255, 255, 0.2);">How Landlord Pacts Work</a>
+          </div>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-xl); padding: 2.2rem; backdrop-filter: blur(12px);">
+          <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1.2rem; color: white;">Why 1,500+ Landlords Trust StayPact:</div>
+          <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.92rem; color: #CBD5E1;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <i class="fa-solid fa-circle-check" style="color: #10B981; font-size: 1.1rem;"></i>
+              <span>100% Government ID & Professional tenant screening</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <i class="fa-solid fa-circle-check" style="color: #10B981; font-size: 1.1rem;"></i>
+              <span>Automated digital rent payout directly to bank</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <i class="fa-solid fa-circle-check" style="color: #10B981; font-size: 1.1rem;"></i>
+              <span>Pre-agreed custom house rules prevent tenant disputes</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <i class="fa-solid fa-circle-check" style="color: #10B981; font-size: 1.1rem;"></i>
+              <span>Zero brokerage fees — keep 100% of your rental income</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Footer (Architectural Dark Luxe)
+       ============================================================ -->
+  <footer class="footer-noir">
     <div class="container">
       <div class="footer-grid">
+        
         <div>
-          <div class="brand-logo" style="color: white; margin-bottom: 0.8rem;">
-            <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
+          <a href="index.html" class="footer-brand-title">
+            <div class="logo-symbol" style="width: 32px; height: 32px; font-size: 0.9rem;"><i class="fa-solid fa-handshake-simple"></i></div>
             <span>Stay<span class="logo-highlight">Pact</span></span>
+          </a>
+          <p class="footer-desc">
+            Redefining monthly living rentals across India. Legally protected digital agreements, verified landlords, and zero moral policing.
+          </p>
+          <div style="display: flex; gap: 0.75rem;">
+            <span class="badge badge-pact-seal"><i class="fa-solid fa-shield"></i> 100% Backed By Law</span>
           </div>
-          <p style="font-size: 0.88rem; line-height: 1.6;">On-demand transparent monthly rental agreements for bachelors, families, and property owners.</p>
         </div>
+
         <div>
-          <h4 class="footer-title">Explore</h4>
+          <h4 class="footer-col-title">Top Cities</h4>
           <ul class="footer-links">
             <li><a href="explore.html?city=Bengaluru">Bengaluru Stays</a></li>
             <li><a href="explore.html?city=Mumbai">Mumbai Apartments</a></li>
+            <li><a href="explore.html?city=Delhi NCR">Delhi NCR Flats</a></li>
+            <li><a href="explore.html?city=Pune">Pune Living Hubs</a></li>
+            <li><a href="explore.html?city=Hyderabad">Hyderabad Tech Stays</a></li>
           </ul>
         </div>
+
         <div>
-          <h4 class="footer-title">Legal</h4>
+          <h4 class="footer-col-title">Platform</h4>
           <ul class="footer-links">
-            <li><a href="agreement.html">Sample Mutual Pact</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="agreement.html">Mutual Pact Legal Specs</a></li>
+            <li><a href="explore.html?target=bachelors_allowed">Bachelor-Friendly Spaces</a></li>
+            <li><a href="explore.html?target=families_only">Family Gated Communities</a></li>
+            <li><a href="dashboard-landlord.html">Landlord Management Hub</a></li>
+            <li><a href="dashboard-tenant.html">Tenant Living Portal</a></li>
           </ul>
         </div>
+
         <div>
-          <h4 class="footer-title">Contact</h4>
-          <p style="font-size: 0.88rem;">support@staypact.com</p>
+          <h4 class="footer-col-title">Trust & Safety</h4>
+          <ul class="footer-links">
+            <li><a href="#">48h Escrow Guarantee</a></li>
+            <li><a href="#">ID Verification Policy</a></li>
+            <li><a href="#">Dispute Resolution Pact</a></li>
+            <li><a href="#">Privacy & Data Security</a></li>
+          </ul>
         </div>
+
       </div>
-      <div style="text-align: center; border-top: 1px solid #1E293B; padding-top: 1.5rem; font-size: 0.8rem;">
-        &copy; 2026 StayPact Platform. All rights reserved.
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 StayPact Technologies Inc. All rights reserved.</div>
+        <div style="display: flex; gap: 1.2rem; font-size: 1.1rem;">
+          <a href="#" style="color: #64748B;"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" style="color: #64748B;"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" style="color: #64748B;"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" style="color: #64748B;"><i class="fa-brands fa-github"></i></a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const props = getProperties().slice(0, 3);
+    // 1. Render Featured Property Cards on Load
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await API.request('/properties');
+      const props = (res.data || []).slice(0, 3);
       const container = document.getElementById('homeFeaturedGrid');
-      container.innerHTML = props.map(p => `
-        <div class="property-card">
-          <div class="card-img-container">
-            <img src="${p.images[0]}" alt="${p.title}">
-            <div class="card-badge-top-left">
-              <span class="badge ${p.targetTenant === 'bachelors_allowed' ? 'badge-bachelor' : 'badge-family'}">
-                ${p.targetTenant === 'bachelors_allowed' ? 'Bachelors' : 'Families'}
-              </span>
+      
+      if (container && props.length > 0) {
+        container.innerHTML = props.map(p => `
+          <div class="property-card-luxe">
+            <div class="card-media-wrapper">
+              <img src="${p.images[0]}" alt="${p.title}" loading="lazy">
+              
+              <div class="card-floating-badge">
+                <span class="badge ${p.targetTenant === 'bachelors_allowed' ? 'badge-bachelor' : 'badge-family'}">
+                  ${p.targetTenant === 'bachelors_allowed' ? '<i class="fa-solid fa-bolt"></i> Bachelors OK' : '<i class="fa-solid fa-people-roof"></i> Families'}
+                </span>
+              </div>
+
+              <button class="card-floating-save" onclick="event.preventDefault(); this.classList.toggle('saved');" title="Save Stay">
+                <i class="fa-regular fa-heart"></i>
+              </button>
+
+              <div class="card-floating-landlord">
+                <img src="${p.landlord.avatar}" alt="${p.landlord.name}" class="landlord-avatar-micro">
+                <span>${p.landlord.name.split(' ')[0]} (Owner)</span>
+              </div>
+            </div>
+
+            <div class="card-luxe-body">
+              <div class="card-locality-row">
+                <span><i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> ${p.location.locality}, ${p.location.city}</span>
+                <span style="color: #F59E0B;"><i class="fa-solid fa-star"></i> ${p.ratingAverage || 4.9}</span>
+              </div>
+
+              <a href="property-detail.html?id=${p._id}" class="card-luxe-title">${p.title}</a>
+
+              <!-- Mutual Pact Terms Strip -->
+              <div class="card-pact-terms-strip">
+                <span><i class="fa-solid fa-handshake"></i> ${p.mutualTerms?.noticePeriodDays || 30}-Day Notice</span>
+                <span><i class="fa-solid fa-shield-halved"></i> Escrow Deposit</span>
+              </div>
+
+              <div class="card-luxe-footer">
+                <div class="card-price-block">
+                  <span class="card-price-val">₹${p.pricing.monthlyRent.toLocaleString('en-IN')}</span>
+                  <span class="card-price-sub">/ month • Zero Brokerage</span>
+                </div>
+                <a href="property-detail.html?id=${p._id}" class="btn btn-primary btn-sm">Inspect & Pact ➔</a>
+              </div>
             </div>
           </div>
-          <div class="card-body">
-            <div class="card-location"><i class="fa-solid fa-location-dot"></i> ${p.locality}, ${p.city}</div>
-            <a href="property-detail.html?id=${p.id}" class="card-title">${p.title}</a>
-            <div class="card-terms-box">
-              <span><i class="fa-solid fa-handshake"></i> ${p.noticeDays}-Day Notice</span>
-              <span><i class="fa-solid fa-shield"></i> Verified</span>
-            </div>
-            <div class="card-footer">
-              <span class="price-amount">₹${p.monthlyRent.toLocaleString('en-IN')}/mo</span>
-              <a href="property-detail.html?id=${p.id}" class="btn btn-primary btn-sm">Inspect & Book</a>
-            </div>
-          </div>
-        </div>
-      `).join('');
+        `).join('');
+      }
     });
 
-    function searchFromHero() {
+    // 2. Interactive Pact Simulator Logic
+    const simulatorData = {
+      bachelor: {
+        title: "Bachelor & Pro Living Pact",
+        controls: `
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-ban-smoking"></i></div>
+            <div class="simulator-item-text">
+              <h4>Zero Moral Policing Guaranteed</h4>
+              <p>Pre-agreed visitor freedom and lifestyle independence guaranteed in writing without landlord interference.</p>
+            </div>
+          </div>
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="simulator-item-text">
+              <h4>Standard 30-Day Notice Period</h4>
+              <p>No 11-month lock-in traps. Exit whenever your project or job relocates with a fair 30-day notice.</p>
+            </div>
+          </div>
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-shield-heart"></i></div>
+            <div class="simulator-item-text">
+              <h4>Guaranteed Deposit Return in 48 Hours</h4>
+              <p>Deposit held securely in escrow and returned promptly after transparent move-out checklist inspection.</p>
+            </div>
+          </div>
+        `,
+        notice: "30 Days Fair Notice Guaranteed",
+        guest: "Friends and guests welcome with mutual respect",
+        food: "All cuisines (Veg & Non-Veg) permitted freely",
+        deposit: "Escrow release within 48 hours of move-out"
+      },
+      family: {
+        title: "Family Gated Society Living Pact",
+        controls: `
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="simulator-item-text">
+              <h4>Gated Society Security & Peaceful Living</h4>
+              <p>Verified family-friendly communities with clubhouse, 24/7 security, children park, and parking allocated.</p>
+            </div>
+          </div>
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <div class="simulator-item-text">
+              <h4>Fixed Maintenance & Utility Transparency</h4>
+              <p>Society maintenance, water meters, and electricity sub-billing pre-agreed in the digital pact.</p>
+            </div>
+          </div>
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="simulator-item-text">
+              <h4>Long-Term Stability with 45-Day Notice</h4>
+              <p>Protection against sudden rent hikes or unexpected landlord eviction notices.</p>
+            </div>
+          </div>
+        `,
+        notice: "45 Days Notice for Long-term Stability",
+        guest: "Family guests freely permitted",
+        food: "Household family kitchen policy",
+        deposit: "Full security deposit returned upon handover"
+      },
+      landlord: {
+        title: "Property Owner Protection Pact",
+        controls: `
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <div class="simulator-item-text">
+              <h4>100% ID & Professional Tenant Screening</h4>
+              <p>Every tenant profile is verified via Govt ID and employer credentials before booking request is sent.</p>
+            </div>
+          </div>
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="simulator-item-text">
+              <h4>Guaranteed On-Time Automated Rent Collection</h4>
+              <p>Direct bank transfers on the 5th of every month with automated receipt generation and penalty clauses.</p>
+            </div>
+          </div>
+          <div class="simulator-interactive-item">
+            <div class="simulator-item-icon"><i class="fa-solid fa-house-circle-check"></i></div>
+            <div class="simulator-item-text">
+              <h4>Digital Property Condition Inventory</h4>
+              <p>Photographic room inventory signed upon move-in to safeguard against property damage disputes.</p>
+            </div>
+          </div>
+        `,
+        notice: "Mutual 30-45 Days Notice Clause",
+        guest: "Landlord house rules codified in pact",
+        food: "Pre-agreed custom dietary clauses",
+        deposit: "Held in verified escrow protection"
+      }
+    };
+
+    function switchSimulatorTab(tabKey, tabElem) {
+      document.querySelectorAll('.simulator-tab').forEach(t => t.classList.remove('active'));
+      tabElem.classList.add('active');
+
+      const data = simulatorData[tabKey];
+      document.getElementById('simControls').innerHTML = data.controls;
+      document.getElementById('simDocTitle').innerText = data.title;
+      document.getElementById('simDocNotice').innerText = data.notice;
+      document.getElementById('simDocGuest').innerText = data.guest;
+      document.getElementById('simDocFood').innerText = data.food;
+      document.getElementById('simDocDeposit').innerText = data.deposit;
+    }
+
+    // 3. Search triggers
+    function executeHeroSearch() {
       const city = document.getElementById('heroCity').value;
       const target = document.getElementById('heroTarget').value;
       const type = document.getElementById('heroType').value;
-      window.location.href = `explore.html?city=${city}&target=${target}&type=${type}`;
+      window.location.href = `explore.html?city=${encodeURIComponent(city)}&target=${target}&type=${type}`;
+    }
+
+    function quickFilterCity(cityName) {
+      window.location.href = `explore.html?city=${encodeURIComponent(cityName)}`;
     }
   </script>
 </body>
