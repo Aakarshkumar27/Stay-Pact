@@ -225,10 +225,13 @@ img {
   font-family: var(--font-heading);
 }
 
-.logo-highlight {
+.logo-highlight,
+.text-gradient-primary {
   background: linear-gradient(135deg, #0D9488 0%, #4F46E5 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .nav-links {

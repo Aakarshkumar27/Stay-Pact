@@ -3,28 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tenant Living Portal | StayPact</title>
+  <title>Tenant Dashboard | StayPact</title>
   
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboards.css">
 </head>
-<body style="background: #F8FAFC;">
+<body>
 
-  <!-- Dynamic Navigation Bar -->
-  <nav class="navbar" id="globalNavbar"></nav>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-symbol"><i class="fa-solid fa-handshake-simple"></i></div>
+        <span class="logo-text">Stay<span class="logo-highlight">Pact</span></span>
+      </a>
 
-  <!-- Tenant Portal Main Container -->
-  <main class="container" style="padding: 2.5rem 1.5rem;">
+      <div class="nav-actions" id="navActions">
+        <!-- Injected via main.js -->
+      </div>
+    </div>
+  </nav>
+
+  <!-- Tenant Hub -->
+  <main class="container dashboard-container">
     
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
-      <div>
-        <h1 style="font-size: 2rem; font-weight: 800; color: #0F172A;" id="tenantWelcomeTitle">Tenant Living Portal</h1>
-        <p style="color: var(--text-secondary); font-size: 0.95rem;">Track your signed digital pacts, active applications, and saved homes.</p>
+    <div class="dashboard-header">
+      <div class="dashboard-title-area">
+        <h1>Tenant Living Portal</h1>
+        <p>Track your signed mutual agreements, rental applications, and saved homes.</p>
       </div>
 
       <a href="explore.html" class="btn btn-primary">
@@ -32,84 +46,72 @@
       </a>
     </div>
 
-    <!-- Stats Cards -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 2.5rem;">
-      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.4rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);">
-        <div style="width: 50px; height: 50px; border-radius: 12px; background: #CCFBF1; color: #0F766E; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
-          <i class="fa-solid fa-file-signature"></i>
-        </div>
-        <div>
-          <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Active Signed Pacts</div>
-          <div style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary);">1</div>
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon teal"><i class="fa-solid fa-file-contract"></i></div>
+        <div class="stat-details">
+          <span class="stat-label">Active Signed Pacts</span>
+          <span class="stat-value" id="statActivePacts">0</span>
         </div>
       </div>
 
-      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.4rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);">
-        <div style="width: 50px; height: 50px; border-radius: 12px; background: #FEF3C7; color: #B45309; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
-          <i class="fa-solid fa-paper-plane"></i>
-        </div>
-        <div>
-          <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Sent Applications</div>
-          <div id="statTenantApps" style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary);">1</div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="fa-solid fa-paper-plane"></i></div>
+        <div class="stat-details">
+          <span class="stat-label">Sent Applications</span>
+          <span class="stat-value" id="statActiveBookings">0</span>
         </div>
       </div>
 
-      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.4rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);">
-        <div style="width: 50px; height: 50px; border-radius: 12px; background: #FFE4E6; color: #BE123C; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
-          <i class="fa-solid fa-heart"></i>
-        </div>
-        <div>
-          <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Saved Stays</div>
-          <div style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary);">2</div>
+      <div class="stat-card">
+        <div class="stat-icon rose"><i class="fa-solid fa-heart"></i></div>
+        <div class="stat-details">
+          <span class="stat-label">Wishlist Properties</span>
+          <span class="stat-value" id="statSavedProps">0</span>
         </div>
       </div>
     </div>
 
-    <!-- Active Signed Pact Showcase -->
-    <section style="margin-bottom: 3rem;">
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem;">
-        <h2 style="font-size: 1.4rem; font-weight: 800;"><i class="fa-solid fa-stamp" style="color: var(--primary);"></i> My Active Mutual Tenancy Pact</h2>
-        <span class="badge badge-verified"><i class="fa-solid fa-check"></i> Sealed & Legally Active</span>
-      </div>
+    <!-- Navigation Tabs -->
+    <div class="dash-tabs">
+      <button class="dash-tab-btn active" id="tabBtn_pacts" onclick="switchTenantTab('pacts')">
+        <i class="fa-solid fa-file-signature"></i> My Digital Pacts
+      </button>
+      <button class="dash-tab-btn" id="tabBtn_apps" onclick="switchTenantTab('apps')">
+        <i class="fa-solid fa-paper-plane"></i> Sent Proposals & Status
+      </button>
+      <button class="dash-tab-btn" id="tabBtn_wishlist" onclick="switchTenantTab('wishlist')">
+        <i class="fa-solid fa-heart"></i> Saved Wishlist
+      </button>
+    </div>
 
-      <div style="background: white; border: 1.5px solid #86EFAC; border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
-        <div style="display: flex; gap: 1.2rem; align-items: center;">
-          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=300&q=80" style="width: 110px; height: 80px; object-fit: cover; border-radius: 8px;">
-          <div>
-            <span style="font-family: monospace; font-size: 0.8rem; background: var(--bg-subtle); padding: 2px 6px; border-radius: 4px; font-weight: 700;">PACT-2026-89421</span>
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin: 2px 0;">Modern 1BHK Studio in Koramangala</h3>
-            <div style="font-size: 0.82rem; color: var(--text-secondary);">
-              <b>Landlord:</b> Rajesh Sharma (+91 98765 43210) &bull; <b>Notice:</b> 30 Days
-            </div>
-          </div>
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 1.5rem;">
-          <div style="text-align: right;">
-            <div style="font-size: 1.3rem; font-weight: 800; color: var(--primary);">₹26,000/mo</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Next Rent Due: 5th of Month</div>
-          </div>
-          <a href="agreement.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-file-contract"></i> View Digital Pact</a>
-        </div>
+    <!-- Tab 1: Pacts -->
+    <div class="tenant-tab-pane" id="tabPane_pacts">
+      <div id="tenantAgreementsList">
+        <!-- Injected via tenant.js -->
       </div>
-    </section>
+    </div>
 
-    <!-- Sent Proposals / Applications -->
-    <section>
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem;">
-        <h2 style="font-size: 1.4rem; font-weight: 800;"><i class="fa-solid fa-paper-plane" style="color: var(--secondary);"></i> My Booking Applications</h2>
+    <!-- Tab 2: Applications -->
+    <div class="tenant-tab-pane" id="tabPane_apps" style="display: none;">
+      <div id="tenantBookingsList">
+        <!-- Injected via tenant.js -->
       </div>
+    </div>
 
-      <div id="tenantApplicationsContainer">
-        <!-- Injected via app.js -->
+    <!-- Tab 3: Wishlist -->
+    <div class="tenant-tab-pane" id="tabPane_wishlist" style="display: none;">
+      <div class="property-grid" id="tenantWishlistGrid">
+        <!-- Injected via tenant.js -->
       </div>
-    </section>
+    </div>
 
   </main>
 
-  <script src="js/app.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', initTenantDashboard);
-  </script>
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tenant.js"></script>
 </body>
 </html>

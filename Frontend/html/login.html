@@ -3,142 +3,663 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login & Register | StayPact</title>
+  <title>Account Access & Registration | StayPact</title>
+  <meta name="description" content="Sign in or create your StayPact account to explore verified rentals and sign digital mutual living agreements.">
   
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
+
+  <style>
+    .auth-page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(circle at 10% 20%, rgba(13, 148, 136, 0.06) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.05) 0%, transparent 40%),
+                  #FBFBFA;
+    }
+
+    .auth-card {
+      max-width: 520px;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+      padding: 2.2rem;
+      margin: 2rem auto;
+      transition: var(--transition);
+    }
+
+    .auth-tab-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-subtle);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.8rem;
+      border: 1px solid var(--border);
+    }
+
+    .auth-tab-btn {
+      padding: 0.65rem 1rem;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .auth-tab-btn.active {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.6rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family);
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      background: #FFFFFF;
+      transition: var(--transition-fast);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .toggle-pass-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      font-size: 0.9rem;
+    }
+    .toggle-pass-btn:hover {
+      color: var(--text-primary);
+    }
+
+    /* Role Selector Cards */
+    .role-select-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .role-card-label {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      position: relative;
+    }
+
+    .role-card-input {
+      display: none;
+    }
+
+    .role-card-input:checked + .role-card-label {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .role-card-input:checked + .role-card-label .role-icon {
+      background: var(--primary);
+      color: white;
+    }
+
+    .role-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: var(--transition-fast);
+    }
+
+    .role-name {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+    }
+
+    .role-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    /* Password strength bar */
+    .password-strength-bar {
+      height: 4px;
+      width: 100%;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .password-strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin: 1.4rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--border);
+    }
+    .auth-divider::before { margin-right: 0.8rem; }
+    .auth-divider::after { margin-left: 0.8rem; }
+  </style>
 </head>
-<body style="background: linear-gradient(180deg, #F0FDFA 0%, #F8FAFC 100%); min-height: 100vh; display: flex; flex-direction: column;">
+<body class="auth-page-wrapper">
 
-  <!-- Navbar -->
-  <nav class="navbar" id="globalNavbar"></nav>
+  <!-- Top Glass Navigation -->
+  <nav class="navbar">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-symbol"><i class="fa-solid fa-handshake-simple"></i></div>
+        <span class="logo-text">Stay<span class="logo-highlight">Pact</span></span>
+      </a>
 
-  <!-- Auth Card Container -->
-  <main class="container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.8rem;">
+        <a href="explore.html" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-compass"></i> Explore Stays
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Auth Main Container -->
+  <main class="container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem;">
     
-    <div style="max-width: 480px; width: 100%; background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); padding: 2.5rem;">
-      
-      <!-- Logo & Title -->
-      <div style="text-align: center; margin-bottom: 2rem;">
-        <div class="brand-logo" style="justify-content: center; margin-bottom: 0.5rem;">
-          <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
-          <span>Stay<span class="logo-highlight">Pact</span></span>
-        </div>
-        <p style="color: var(--text-secondary); font-size: 0.92rem;">Monthly living agreements on fair mutual terms</p>
+    <div class="auth-card">
+
+      <!-- Header Intro -->
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <h1 style="font-size: 1.75rem; font-weight: 900; color: #0F172A; letter-spacing: -0.5px;" id="authHeaderTitle">Welcome to StayPact</h1>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;" id="authHeaderSubtitle">
+          Fair monthly rentals on mutual terms & zero moral policing
+        </p>
       </div>
 
-      <!-- Auth Tabs (Login vs Register) -->
-      <div style="display: flex; border-bottom: 2px solid var(--border); margin-bottom: 1.8rem;">
-        <button id="tabLogin" class="btn" style="flex: 1; border-radius: 0; border-bottom: 3px solid var(--primary); font-weight: 800; color: var(--primary);" onclick="switchAuthTab('login')">
-          Log In
+      <!-- Tab Switcher -->
+      <div class="auth-tab-nav">
+        <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
         </button>
-        <button id="tabRegister" class="btn" style="flex: 1; border-radius: 0; border-bottom: 3px solid transparent; font-weight: 700; color: var(--text-muted);" onclick="switchAuthTab('register')">
-          Register
+        <button type="button" class="auth-tab-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">
+          <i class="fa-solid fa-user-plus"></i> Create Account
         </button>
       </div>
 
-      <!-- 1. LOGIN FORM -->
-      <form id="loginForm" onsubmit="handleLogin(event)" style="display: flex; flex-direction: column; gap: 1.2rem;">
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Email Address</label>
-          <input type="email" id="loginEmail" required placeholder="name@example.com" value="tenant@staypact.com" style="width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-        </div>
-
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Password</label>
-          <input type="password" id="loginPassword" required value="password123" style="width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="padding: 0.8rem; font-size: 1rem;">
-          Sign In
-        </button>
-
-        <!-- Pre-filled test hints -->
-        <div style="background: var(--bg-subtle); padding: 0.8rem; border-radius: 6px; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
-          <b>Quick Demo Accounts:</b><br>
-          &bull; Tenant Demo: <code>tenant@staypact.com</code> (Pass: <code>123</code>)<br>
-          &bull; Landlord Demo: <code>landlord@staypact.com</code> (Pass: <code>123</code>)
-        </div>
-      </form>
-
-      <!-- 2. REGISTER FORM -->
-      <form id="registerForm" onsubmit="handleRegister(event)" style="display: none; flex-direction: column; gap: 1.2rem;">
+      <!-- ============================================================
+           TAB 1: SIGN IN FORM
+           ============================================================ -->
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
         
-        <!-- Role Selection -->
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">I am joining as:</label>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
-            <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem; border: 1.5px solid var(--primary); background: var(--primary-light); border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 700;">
-              <input type="radio" name="regRole" value="tenant" checked onchange="toggleTenantOptions(true)">
-              <span>👤 Tenant / Renter</span>
-            </label>
-            <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 700;">
-              <input type="radio" name="regRole" value="landlord" onchange="toggleTenantOptions(false)">
-              <span>🏠 Landlord / Owner</span>
-            </label>
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email Address</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="loginEmail" class="form-control" required placeholder="you@example.com" autocomplete="email">
           </div>
         </div>
 
-        <!-- Tenant Category (Bachelor vs Family) -->
-        <div id="tenantCategoryGroup">
-          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Tenant Type</label>
-          <select id="regTenantType" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-            <option value="Bachelor">Bachelor / Working Professional</option>
-            <option value="Family">Family</option>
-            <option value="Student">Student</option>
-          </select>
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <label class="form-label" for="loginPassword" style="margin-bottom: 0;">Password</label>
+            <a href="javascript:void(0)" onclick="handleForgotPassword()" style="font-size: 0.78rem; font-weight: 700; color: var(--primary);">Forgot password?</a>
+          </div>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="loginPassword" class="form-control" required placeholder="Enter your password" autocomplete="current-password">
+            <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('loginPassword', this)">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
         </div>
 
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Full Legal Name</label>
-          <input type="text" id="regName" required placeholder="e.g. Arjun Mehta" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.4rem;">
+          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+            <input type="checkbox" id="rememberMe" checked style="accent-color: var(--primary);"> Remember me
+          </label>
         </div>
 
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Email Address</label>
-          <input type="email" id="regEmail" required placeholder="name@example.com" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-        </div>
-
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Phone Number</label>
-          <input type="tel" id="regPhone" required placeholder="+91 98765 43210" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-        </div>
-
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Password</label>
-          <input type="password" id="regPassword" required placeholder="At least 6 characters" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="padding: 0.8rem; font-size: 1rem;">
-          Create Account
+        <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Account
         </button>
+
+        <div style="text-align: center; margin-top: 1.4rem; font-size: 0.88rem; color: var(--text-secondary);">
+          Don't have an account yet? 
+          <a href="javascript:void(0)" onclick="switchAuthTab('register')" style="font-weight: 800; color: var(--primary);">Create one for free</a>
+        </div>
+      </form>
+
+      <!-- ============================================================
+           TAB 2: REGISTER (CREATE ACCOUNT) FORM
+           ============================================================ -->
+      <form id="registerForm" onsubmit="handleRegisterSubmit(event)" style="display: none;">
+        
+        <!-- Account Role Selection -->
+        <div class="form-group">
+          <label class="form-label">I am joining as a:</label>
+          <div class="role-select-grid">
+            <div>
+              <input type="radio" name="accountRole" id="roleTenant" value="tenant" class="role-card-input" checked onchange="toggleRoleSpecificFields()">
+              <label for="roleTenant" class="role-card-label">
+                <div class="role-icon"><i class="fa-solid fa-house-user"></i></div>
+                <div class="role-name">Tenant</div>
+                <div class="role-desc">Looking to rent stays</div>
+              </label>
+            </div>
+
+            <div>
+              <input type="radio" name="accountRole" id="roleLandlord" value="landlord" class="role-card-input" onchange="toggleRoleSpecificFields()">
+              <label for="roleLandlord" class="role-card-label">
+                <div class="role-icon"><i class="fa-solid fa-key"></i></div>
+                <div class="role-name">Landlord</div>
+                <div class="role-desc">Listing my property</div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="form-label" for="regName">Full Legal Name</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-user input-icon"></i>
+            <input type="text" id="regName" class="form-control" required placeholder="e.g. Arjun Mehta" autocomplete="name">
+          </div>
+        </div>
+
+        <!-- Email Address -->
+        <div class="form-group">
+          <label class="form-label" for="regEmail">Email Address</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="regEmail" class="form-control" required placeholder="you@example.com" autocomplete="email">
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label class="form-label" for="regPhone">Mobile Phone Number</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-phone input-icon"></i>
+            <input type="tel" id="regPhone" class="form-control" required placeholder="+91 98765 43210" autocomplete="tel">
+          </div>
+        </div>
+
+        <!-- Tenant Category (Visible if Tenant) -->
+        <div id="tenantFieldsGroup">
+          <div class="form-group">
+            <label class="form-label" for="regTenantType">Living Persona / Household</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-users input-icon"></i>
+              <select id="regTenantType" class="form-control">
+                <option value="bachelor">Bachelor / Single Working Professional</option>
+                <option value="family">Family Household</option>
+                <option value="student">Student / Intern</option>
+                <option value="couple">Working Couple</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regOccupation">Occupation / Company / University</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-briefcase input-icon"></i>
+              <input type="text" id="regOccupation" class="form-control" placeholder="e.g. Software Engineer at Infosys">
+            </div>
+          </div>
+        </div>
+
+        <!-- Landlord Details (Visible if Landlord) -->
+        <div id="landlordFieldsGroup" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="regCity">Primary Property Location / City</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-location-dot input-icon"></i>
+              <select id="regCity" class="form-control">
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi NCR">Delhi NCR / Gurgaon</option>
+                <option value="Pune">Pune</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Other">Other City</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regLandlordBio">About Your Properties</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-building-user input-icon"></i>
+              <input type="text" id="regLandlordBio" class="form-control" placeholder="e.g. Individual flat owner in Koramangala">
+            </div>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Create Password</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="regPassword" class="form-control" required minlength="6" placeholder="At least 6 characters" oninput="checkPasswordStrength(this.value)">
+            <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('regPassword', this)">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <div class="password-strength-bar">
+            <div id="passwordStrengthFill" class="password-strength-fill"></div>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label class="form-label" for="regConfirmPassword">Confirm Password</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-shield-halved input-icon"></i>
+            <input type="password" id="regConfirmPassword" class="form-control" required placeholder="Re-enter password">
+          </div>
+          <div id="passwordMatchNote" style="font-size: 0.75rem; margin-top: 4px; display: none;"></div>
+        </div>
+
+        <!-- Agree to terms -->
+        <div style="margin-bottom: 1.4rem;">
+          <label style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.82rem; color: var(--text-secondary); cursor: pointer; line-height: 1.3;">
+            <input type="checkbox" id="regTermsAgree" required style="accent-color: var(--primary); margin-top: 3px;">
+            <span>I agree to StayPact's <a href="agreement.html" target="_blank" style="color: var(--primary); font-weight: 700;">Mutual Living Pact Standards</a>, Terms of Service, and 48-Hour Deposit Refund Policy.</span>
+          </label>
+        </div>
+
+        <button type="submit" id="regSubmitBtn" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+          <i class="fa-solid fa-user-check"></i> Create My Account
+        </button>
+
+        <div style="text-align: center; margin-top: 1.4rem; font-size: 0.88rem; color: var(--text-secondary);">
+          Already have an account? 
+          <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="font-weight: 800; color: var(--primary);">Sign in</a>
+        </div>
       </form>
 
     </div>
 
   </main>
 
-  <script src="js/app.js"></script>
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.82rem; border-top: 1px solid var(--border); background: white;">
+    &copy; 2026 StayPact Technologies Inc. All rights reserved. &bull; Transparent, Fair Mutual Living
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
   <script>
+    // Tab switching based on URL parameters or click
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tab = urlParams.get('tab') || urlParams.get('mode');
+      if (tab === 'signup' || tab === 'register') {
+        switchAuthTab('register');
+      } else {
+        switchAuthTab('login');
+      }
+    });
+
     function switchAuthTab(tab) {
-      const isLogin = tab === 'login';
-      document.getElementById('loginForm').style.display = isLogin ? 'flex' : 'none';
-      document.getElementById('registerForm').style.display = isLogin ? 'none' : 'flex';
-      
-      document.getElementById('tabLogin').style.borderBottomColor = isLogin ? 'var(--primary)' : 'transparent';
-      document.getElementById('tabLogin').style.color = isLogin ? 'var(--primary)' : 'var(--text-muted)';
-      
-      document.getElementById('tabRegister').style.borderBottomColor = isLogin ? 'transparent' : 'var(--primary)';
-      document.getElementById('tabRegister').style.color = isLogin ? 'var(--text-muted)' : 'var(--primary)';
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabBtnLogin = document.getElementById('tabBtnLogin');
+      const tabBtnRegister = document.getElementById('tabBtnRegister');
+      const title = document.getElementById('authHeaderTitle');
+      const subtitle = document.getElementById('authHeaderSubtitle');
+
+      if (tab === 'register') {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        tabBtnLogin.classList.remove('active');
+        tabBtnRegister.classList.add('active');
+        title.innerText = 'Create StayPact Account';
+        subtitle.innerText = 'Join verified renters and hosts on fair mutual terms';
+      } else {
+        registerForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        tabBtnRegister.classList.remove('active');
+        tabBtnLogin.classList.add('active');
+        title.innerText = 'Welcome to StayPact';
+        subtitle.innerText = 'Sign in to access your digital mutual living agreements';
+      }
     }
 
-    function toggleTenantOptions(isTenant) {
-      document.getElementById('tenantCategoryGroup').style.display = isTenant ? 'block' : 'none';
+    function toggleRoleSpecificFields() {
+      const isLandlord = document.getElementById('roleLandlord').checked;
+      const tenantGroup = document.getElementById('tenantFieldsGroup');
+      const landlordGroup = document.getElementById('landlordFieldsGroup');
+
+      if (isLandlord) {
+        tenantGroup.style.display = 'none';
+        landlordGroup.style.display = 'block';
+      } else {
+        tenantGroup.style.display = 'block';
+        landlordGroup.style.display = 'none';
+      }
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-regular fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fa-regular fa-eye';
+      }
+    }
+
+    function checkPasswordStrength(pass) {
+      const fill = document.getElementById('passwordStrengthFill');
+      if (!pass) {
+        fill.style.width = '0%';
+        return;
+      }
+      let strength = 0;
+      if (pass.length >= 6) strength += 30;
+      if (pass.length >= 10) strength += 20;
+      if (/[A-Z]/.test(pass)) strength += 25;
+      if (/[0-9!@#$%^&*]/.test(pass)) strength += 25;
+
+      fill.style.width = `${strength}%`;
+      if (strength < 50) {
+        fill.style.backgroundColor = '#EF4444'; // red
+      } else if (strength < 80) {
+        fill.style.backgroundColor = '#F59E0B'; // amber
+      } else {
+        fill.style.backgroundColor = '#10B981'; // green
+      }
+    }
+
+    // Handle Login
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('loginSubmitBtn');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing in...';
+
+      const res = await API.request('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password })
+      });
+
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Account';
+
+      if (res && res.success && res.token && res.user) {
+        API.setAuth(res.token, res.user);
+        showToast(`Welcome back, ${res.user.name}!`, 'success');
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        
+        setTimeout(() => {
+          if (redirect && redirect.endsWith('.html')) {
+            window.location.href = redirect;
+          } else {
+            window.location.href = res.user.role === 'landlord' ? 'dashboard-landlord.html' : 'dashboard-tenant.html';
+          }
+        }, 600);
+      } else {
+        showToast(res.message || 'Invalid email or password. Please try again.', 'error');
+      }
+    }
+
+    // Handle Register (Create Account)
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const role = document.querySelector('input[name="accountRole"]:checked').value;
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+      if (password !== confirmPassword) {
+        showToast('Passwords do not match. Please re-enter.', 'error');
+        return;
+      }
+
+      let tenantType = 'bachelor';
+      let occupation = '';
+      if (role === 'tenant') {
+        tenantType = document.getElementById('regTenantType').value;
+        occupation = document.getElementById('regOccupation').value.trim() || 'Working Professional';
+      } else {
+        tenantType = 'host';
+        const city = document.getElementById('regCity').value;
+        const bio = document.getElementById('regLandlordBio').value.trim();
+        occupation = bio || `Property Owner (${city})`;
+      }
+
+      const btn = document.getElementById('regSubmitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating account...';
+
+      const res = await API.request('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          role,
+          tenantType,
+          occupation,
+          password
+        })
+      });
+
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-user-check"></i> Create My Account';
+
+      if (res && res.success && res.token && res.user) {
+        API.setAuth(res.token, res.user);
+        showToast(`🎉 Account created! Welcome to StayPact, ${res.user.name}.`, 'success');
+        
+        setTimeout(() => {
+          window.location.href = res.user.role === 'landlord' ? 'dashboard-landlord.html' : 'dashboard-tenant.html';
+        }, 700);
+      } else {
+        showToast(res.message || 'Could not complete registration. Please try again.', 'error');
+      }
+    }
+
+    function handleForgotPassword() {
+      const email = prompt('Enter your registered email address to receive password reset instructions:');
+      if (email) {
+        showToast(`Password reset link sent to ${email}`, 'success');
+      }
     }
   </script>
 </body>

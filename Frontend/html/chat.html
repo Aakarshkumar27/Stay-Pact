@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Negotiation & Chat | StayPact</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboards.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-symbol"><i class="fa-solid fa-handshake-simple"></i></div>
+        <span class="logo-text">Stay<span class="logo-highlight">Pact</span></span>
+      </a>
+
+      <div class="nav-actions" id="navActions">
+        <!-- Injected via main.js -->
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="padding: 1.5rem 0;">
+    
+    <div class="chat-window-card">
+      
+      <!-- Sidebar Threads -->
+      <div class="chat-sidebar">
+        <div class="chat-sidebar-header">
+          <i class="fa-regular fa-comments" style="color: var(--primary);"></i> Inquiries & Negotiations
+        </div>
+        <div class="chat-thread-list" id="chatThreadList">
+          <!-- Injected via chat.js -->
+        </div>
+      </div>
+
+      <!-- Active Message Pane -->
+      <div class="chat-main">
+        
+        <!-- Header -->
+        <div class="chat-header">
+          <div style="display: flex; align-items: center; gap: 0.9rem;">
+            <img id="chatHeaderAvatar" src="" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;" alt="Chat user">
+            <div>
+              <h4 id="chatHeaderName" style="font-size: 1.05rem; font-weight: 800;">-</h4>
+              <div id="chatHeaderRole" style="font-size: 0.75rem; color: var(--text-muted);">-</div>
+            </div>
+          </div>
+
+          <div>
+            <a href="agreement.html" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-file-contract"></i> View Pact
+            </a>
+          </div>
+        </div>
+
+        <!-- Messages Body -->
+        <div class="chat-messages-body" id="chatMessagesBody">
+          <!-- Injected via chat.js -->
+        </div>
+
+        <!-- Input Box -->
+        <form class="chat-input-area" id="chatForm">
+          <input type="text" id="chatTextInput" placeholder="Type a message or discuss mutual terms..." autocomplete="off">
+          <button type="submit" class="btn btn-primary" style="border-radius: var(--radius-full); width: 44px; height: 44px; padding: 0;">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Optional Socket.io script -->
+  <script src="/socket.io/socket.io.js" onerror="console.log('Socket.io running offline mode')"></script>
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

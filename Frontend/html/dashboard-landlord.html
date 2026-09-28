@@ -3,237 +3,284 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landlord Management Hub | StayPact</title>
+  <title>Landlord Control Portal | StayPact</title>
   
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboards.css">
+  <style>
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-close-btn {
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      background: #F8FAFC;
+    }
+  </style>
 </head>
-<body style="background: #F8FAFC;">
+<body>
 
   <!-- Navbar -->
   <nav class="navbar">
     <div class="container nav-wrapper">
       <a href="index.html" class="brand-logo">
-        <div class="logo-icon"><i class="fa-solid fa-handshake-simple"></i></div>
-        <span>Stay<span class="logo-highlight">Pact</span></span>
+        <div class="logo-symbol"><i class="fa-solid fa-handshake-simple"></i></div>
+        <span class="logo-text">Stay<span class="logo-highlight">Pact</span></span>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="explore.html" class="nav-link"><i class="fa-solid fa-compass"></i> Explore Stays</a></li>
-        <li><a href="dashboard-landlord.html" class="nav-link active"><i class="fa-solid fa-gauge"></i> Landlord Hub</a></li>
-        <li><a href="agreement.html" class="nav-link"><i class="fa-solid fa-file-contract"></i> Mutual Pacts</a></li>
-      </ul>
-
-      <!-- User Profile Badge in Navbar instead of duplicate button -->
-      <div style="display: flex; align-items: center; gap: 0.8rem; background: white; padding: 4px 12px; border-radius: 9999px; border: 1px solid var(--border);">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-        <div style="font-size: 0.82rem; font-weight: 700; line-height: 1.2;">
-          <div>Rajesh Sharma</div>
-          <div style="font-size: 0.68rem; color: var(--primary); font-weight: 800;">VERIFIED LANDLORD</div>
-        </div>
+      <div class="nav-actions" id="navActions">
+        <!-- Injected via main.js -->
       </div>
     </div>
   </nav>
 
-  <!-- Main Dashboard Content -->
-  <main class="container" style="padding: 2.5rem 1.5rem;">
+  <!-- Main Landlord Dashboard -->
+  <main class="container dashboard-container">
     
-    <!-- Top Header with the SINGLE Primary Action Button -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
-      <div>
-        <h1 style="font-size: 2rem; font-weight: 800; color: #0F172A;">Landlord Management Hub</h1>
-        <p style="color: var(--text-secondary); font-size: 0.95rem;">Manage your rooms, approve tenant proposals, and seal mutual living pacts.</p>
+    <!-- Top Header -->
+    <div class="dashboard-header">
+      <div class="dashboard-title-area">
+        <h1>Landlord Management Hub</h1>
+        <p>Review incoming tenant proposals, negotiate terms, seal digital pacts, and manage listings.</p>
       </div>
 
-      <!-- Single Primary Action -->
       <button class="btn btn-primary" onclick="openAddPropertyModal()">
         <i class="fa-solid fa-plus"></i> List New Living Space
       </button>
     </div>
 
-    <!-- Quick Stats Cards Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 2.5rem;">
-      
-      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.4rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);">
-        <div style="width: 50px; height: 50px; border-radius: 12px; background: #CCFBF1; color: #0F766E; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
-          <i class="fa-solid fa-building-user"></i>
-        </div>
-        <div>
-          <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Active Listings</div>
-          <div id="statTotalProps" style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary);">0</div>
+    <!-- Quick Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon teal"><i class="fa-solid fa-building-user"></i></div>
+        <div class="stat-details">
+          <span class="stat-label">Active Properties</span>
+          <span class="stat-value" id="statActiveListings">0</span>
         </div>
       </div>
 
-      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.4rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);">
-        <div style="width: 50px; height: 50px; border-radius: 12px; background: #FEF3C7; color: #B45309; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
-          <i class="fa-solid fa-inbox"></i>
-        </div>
-        <div>
-          <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Pending Proposals</div>
-          <div id="statPendingRequests" style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary);">0</div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="fa-solid fa-file-signature"></i></div>
+        <div class="stat-details">
+          <span class="stat-label">Pending Requests</span>
+          <span class="stat-value" id="statPendingRequests">0</span>
         </div>
       </div>
 
-      <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.4rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);">
-        <div style="width: 50px; height: 50px; border-radius: 12px; background: #EEF2FF; color: #4338CA; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
-          <i class="fa-solid fa-coins"></i>
-        </div>
-        <div>
-          <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Monthly Potential Rent</div>
-          <div id="statTotalRent" style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary);">₹0</div>
+      <div class="stat-card">
+        <div class="stat-icon indigo"><i class="fa-solid fa-coins"></i></div>
+        <div class="stat-details">
+          <span class="stat-label">Monthly Portfolio Rent</span>
+          <span class="stat-value" id="statMonthlyIncome">₹0</span>
         </div>
       </div>
-
     </div>
 
-    <!-- Section 1: Incoming Tenant Proposals -->
+    <!-- Incoming Tenant Proposals Section -->
     <section style="margin-bottom: 3rem;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem;">
-        <h2 style="font-size: 1.4rem; font-weight: 800;"><i class="fa-solid fa-inbox" style="color: var(--primary);"></i> Incoming Tenant Proposals</h2>
-        <span class="badge badge-verified">Mutual Terms Review</span>
+        <h2 style="font-size: 1.4rem; font-weight: 800;"><i class="fa-solid fa-inbox" style="color: var(--primary);"></i> Incoming Tenant Proposals & Terms</h2>
+        <span class="badge badge-verified">Review & Generate Pact</span>
       </div>
 
       <div id="landlordRequestsList">
-        <!-- Injected via JavaScript -->
+        <!-- Injected via landlord.js -->
       </div>
     </section>
 
-    <!-- Section 2: My Listed Properties -->
+    <!-- My Listings Inventory Section -->
     <section>
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem;">
-        <h2 style="font-size: 1.4rem; font-weight: 800;"><i class="fa-solid fa-house" style="color: var(--secondary);"></i> My Active Properties</h2>
+        <h2 style="font-size: 1.4rem; font-weight: 800;"><i class="fa-solid fa-house" style="color: var(--secondary);"></i> My Listed Properties</h2>
       </div>
 
-      <div id="landlordListingsContainer" style="display: flex; flex-direction: column; gap: 1rem;">
-        <!-- Injected via JavaScript -->
+      <div id="landlordListingsGrid">
+        <!-- Injected via landlord.js -->
       </div>
     </section>
 
   </main>
 
-  <!-- Add Property Modal Form -->
+  <!-- Add Property Modal -->
   <div class="modal-overlay" id="addPropertyModal">
-    <div class="modal-card" style="max-width: 680px;">
+    <div class="modal-card">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-house-chimney-medical" style="color: var(--primary);"></i> List New Space on StayPact</h3>
-        <button onclick="closeAddPropertyModal()" style="font-size: 1.3rem;">&times;</button>
+        <h3 style="font-size: 1.15rem; font-weight: 800;"><i class="fa-solid fa-house-chimney-medical" style="color: var(--primary);"></i> List New Room or Flat</h3>
+        <button class="modal-close-btn" onclick="closeAddPropertyModal()">&times;</button>
       </div>
 
-      <form id="newPropertyForm" onsubmit="handleCreateProperty(event)" style="display: flex; flex-direction: column; gap: 1.2rem;">
-        
-        <div>
-          <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Title</label>
-          <input type="text" id="newTitle" required placeholder="e.g. Spacious 2BHK Near Metro with Balcony" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+      <form id="addPropertyForm">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 1.2rem;">
+          
           <div>
-            <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Space Type</label>
-            <select id="newType" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-              <option value="single_room">Private Single Room</option>
-              <option value="1bhk">1 BHK Flat</option>
-              <option value="2bhk" selected>2 BHK Apartment</option>
-              <option value="3bhk">3 BHK Apartment</option>
-              <option value="studio">Studio</option>
-            </select>
+            <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Listing Title</label>
+            <input type="text" id="newPropTitle" required placeholder="e.g. Spacious 2BHK Near Tech Park with Balcony" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
           </div>
 
-          <div>
-            <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Tenant Preference</label>
-            <select id="newTarget" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-              <option value="bachelors_allowed">Bachelors Allowed</option>
-              <option value="families_only">Families Only</option>
-              <option value="anyone">Anyone Welcome</option>
-            </select>
-          </div>
-
-          <div>
-            <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Furnishing</label>
-            <select id="newFurnishing" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-              <option value="fully_furnished">Fully Furnished</option>
-              <option value="semi_furnished">Semi Furnished</option>
-              <option value="unfurnished">Unfurnished</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-          <div>
-            <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Monthly Rent (₹)</label>
-            <input type="number" id="newRent" required placeholder="e.g. 28000" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 700; color: var(--primary);">
-          </div>
-
-          <div>
-            <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Security Deposit (₹)</label>
-            <input type="number" id="newDeposit" required placeholder="e.g. 50000" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 700;">
-          </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-          <div>
-            <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">City</label>
-            <select id="newCity" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-              <option value="Bengaluru">Bengaluru</option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Delhi NCR">Delhi NCR</option>
-              <option value="Pune">Pune</option>
-            </select>
-          </div>
-
-          <div>
-            <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Locality / Area</label>
-            <input type="text" id="newLocality" required placeholder="e.g. Koramangala, Indiranagar, Powai" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
-          </div>
-        </div>
-
-        <!-- Mutual Terms Customization -->
-        <div style="background: #F0FDF4; border: 1px dashed #86EFAC; padding: 1rem; border-radius: 8px;">
-          <h4 style="font-size: 0.85rem; font-weight: 800; color: #166534; margin-bottom: 0.6rem;"><i class="fa-solid fa-handshake"></i> Pre-Set Mutual Living Rules</h4>
-          <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
             <div>
-              <label style="font-size: 0.75rem; font-weight: 700; color: #166534;">Notice Period (Days)</label>
-              <input type="number" id="newNotice" value="30" style="width: 100%; padding: 0.4rem; border: 1px solid #86EFAC; border-radius: 4px; font-weight: 700;">
+              <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Property Type</label>
+              <select id="newPropType" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+                <option value="single_room">Private Single Room</option>
+                <option value="1bhk">1 BHK Flat</option>
+                <option value="2bhk" selected>2 BHK Apartment</option>
+                <option value="3bhk">3 BHK Flat</option>
+                <option value="studio">Studio</option>
+              </select>
             </div>
+
             <div>
-              <label style="font-size: 0.75rem; font-weight: 700; color: #166534;">Guest & Visitor Policy</label>
-              <input type="text" id="newVisitors" value="Friends & guests welcome respectfully anytime" style="width: 100%; padding: 0.4rem; border: 1px solid #86EFAC; border-radius: 4px;">
+              <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Tenant Preference</label>
+              <select id="newPropTarget" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+                <option value="bachelors_allowed">Bachelors Allowed</option>
+                <option value="families_only">Families Only</option>
+                <option value="anyone">Anyone Welcome</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Furnishing</label>
+              <select id="newPropFurnishing" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+                <option value="fully_furnished">Fully Furnished</option>
+                <option value="semi_furnished">Semi Furnished</option>
+                <option value="unfurnished">Unfurnished</option>
+              </select>
             </div>
           </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Monthly Rent (₹)</label>
+              <input type="number" id="newPropRent" required placeholder="e.g. 25000" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 700; color: var(--primary);">
+            </div>
+
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Security Deposit (₹)</label>
+              <input type="number" id="newPropDeposit" required placeholder="e.g. 50000" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 700;">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">City</label>
+              <select id="newPropCity" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi NCR">Delhi NCR</option>
+                <option value="Pune">Pune</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Locality / Area</label>
+              <input type="text" id="newPropLocality" required placeholder="e.g. Koramangala 5th Block" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-weight: 600;">
+            </div>
+          </div>
+
+          <!-- Mutual Terms Specifications -->
+          <div style="background: #F0FDF4; border: 1px dashed #86EFAC; padding: 1rem; border-radius: 8px;">
+            <h4 style="font-size: 0.9rem; font-weight: 800; color: #166534; margin-bottom: 0.8rem;"><i class="fa-solid fa-handshake"></i> Pre-Set Mutual Terms</h4>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 1rem;">
+              <div>
+                <label style="font-size: 0.75rem; font-weight: 700; color: #166534;">Notice Period (Days)</label>
+                <input type="number" id="newPropNotice" value="30" style="width: 100%; padding: 0.5rem; border: 1px solid #86EFAC; border-radius: 4px; font-weight: 700;">
+              </div>
+
+              <div>
+                <label style="font-size: 0.75rem; font-weight: 700; color: #166534;">Guest & Visitor Policy</label>
+                <input type="text" id="newPropVisitors" value="Friends and guests welcome anytime respectfully" style="width: 100%; padding: 0.5rem; border: 1px solid #86EFAC; border-radius: 4px;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.4rem; display: block;">Amenities</label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.5rem; font-size: 0.82rem; font-weight: 600;">
+              <label><input type="checkbox" value="wifi" class="new-prop-amenity" checked> High Speed WiFi</label>
+              <label><input type="checkbox" value="ac" class="new-prop-amenity" checked> AC</label>
+              <label><input type="checkbox" value="kitchen" class="new-prop-amenity" checked> Kitchen</label>
+              <label><input type="checkbox" value="parking_car" class="new-prop-amenity"> Car Parking</label>
+              <label><input type="checkbox" value="washing_machine" class="new-prop-amenity" checked> Washing Machine</label>
+              <label><input type="checkbox" value="power_backup" class="new-prop-amenity" checked> Power Backup</label>
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Image Photo URL</label>
+            <input type="url" id="newPropImgUrl" placeholder="https://images.unsplash.com/photo-..." style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.88rem;">
+          </div>
+
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Description</label>
+            <textarea id="newPropDesc" rows="2" required placeholder="Highlight lighting, furniture, surroundings..." style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.88rem;"></textarea>
+          </div>
+
         </div>
 
-        <div>
-          <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Photo URL</label>
-          <input type="url" id="newImg" value="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem;">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeAddPropertyModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Publish Listing & Terms</button>
         </div>
-
-        <div>
-          <label style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Description</label>
-          <textarea id="newDesc" rows="2" required placeholder="Describe lighting, furniture, surroundings..." style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem;">Beautiful, sunlit home with high speed wifi and modern fittings.</textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="padding: 0.8rem;">
-          <i class="fa-solid fa-cloud-arrow-up"></i> Publish Listing & Terms
-        </button>
-
       </form>
     </div>
   </div>
 
-  <script src="js/app.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', initLandlordDashboard);
-
-    function openAddPropertyModal() {
-      document.getElementById('addPropertyModal').classList.add('active');
-    }
-    function closeAddPropertyModal() {
-      document.getElementById('addPropertyModal').classList.remove('active');
-    }
-  </script>
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/landlord.js"></script>
 </body>
 </html>
